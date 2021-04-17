@@ -31,7 +31,7 @@
                 <input type="email" name="email" id="email" class="form-control" value="josecarlosromeiro1986@gmail.com">
             </div>
 
-            <button type="submit" class="btn btn-primary">Enviar!</button>
+            <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
     </div>
 
