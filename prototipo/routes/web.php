@@ -16,5 +16,13 @@ Route::get('/', function () {
 });
 
 Route::get('imoveis', 'PropertiesController@index');
+
 Route::get('imoveis/novo', 'PropertiesController@create');
 Route::post('imoveis/store', 'PropertiesController@store');
+
+Route::get('imoveis/{name}', 'PropertiesController@show');
+
+Route::get('imoveis/editar/{name}', 'PropertiesController@edit');
+Route::put('imoveis/update/{name}', 'PropertiesController@update');
+
+Route::get('imoveis/remover/{name}', 'PropertiesController@destroy');
