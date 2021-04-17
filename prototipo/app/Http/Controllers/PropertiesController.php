@@ -39,7 +39,7 @@ class PropertiesController extends Controller
     {
         $propertSlug = $this->setName($request->title);
 
-        $property = [
+        /* $property = [
             $request->title,
             $propertSlug,
             $request->sale_price,
@@ -47,7 +47,17 @@ class PropertiesController extends Controller
             $request->description
         ];
 
-        DB::insert('INSERT INTO properties (title, name, sale_price, rental_price, description) VALUES (?, ?, ?, ?, ?)', $property);
+        DB::insert('INSERT INTO properties (title, name, sale_price, rental_price, description) VALUES (?, ?, ?, ?, ?)', $property); */
+
+        $property = [
+            'title' => $request->title,
+            'name' => $propertSlug,
+            'sale_price' => $request->sale_price,
+            'rental_price' => $request->rental_pric,
+            'description' => $request->description
+        ];
+
+        Property::create($property);
 
         return redirect()->action('PropertiesController@index');
     }
@@ -70,7 +80,7 @@ class PropertiesController extends Controller
     {
         $propertSlug = $this->setName($request->title);
 
-        $property = [
+        /* $property = [
             $request->title,
             $propertSlug,
             $request->sale_price,
@@ -80,7 +90,20 @@ class PropertiesController extends Controller
         ];
 
         DB::update('UPDATE properties SET title = ?, name = ?, sale_price = ?, rental_price = ?, description = ?
-                        WHERE name = ?', $property);
+                        WHERE name = ?', $property); */
+
+        $property = Property::where('name', $name)->first();
+
+        if (!empty($property)) {
+
+            $property->title = $request->title;
+            $property->name = $propertSlug;
+            $property->sale_price = $request->sale_price;
+            $property->rental_price = $request->rental_price;
+            $property->description = $request->description;
+
+            $property->save();
+        }
 
         return redirect()->action('PropertiesController@index');
     }
@@ -88,11 +111,12 @@ class PropertiesController extends Controller
     public function destroy($name)
     {
         //$property = DB::select('SELECT * FROM properties WHERE name = ?', [$name]);
-        $property = Property::where('name', $name)->get();
+        $property = Property::where('name', $name)->first();
 
         if (!empty($property)) {
 
-            DB::delete('DELETE FROM properties WHERE name = ?', [$name]);
+            //DB::delete('DELETE FROM properties WHERE name = ?', [$name]);
+            $property->delete();
         }
 
         return redirect()->action('PropertiesController@index');
