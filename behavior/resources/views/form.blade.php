@@ -12,9 +12,10 @@
 <body>
 
     <div class="container my-5">
-        <form action="" autocomplete="off">
+        <form action="{{ url('/users/1') }}" autocomplete="off" method="POST">
 
-            @csrf
+            @method('DELETE')
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <div class="form-group">
                 <label for="first_nome">Primeiro Nome</label>
