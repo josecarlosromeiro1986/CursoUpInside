@@ -18,8 +18,9 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->string('subtitle');
             $table->text('description');
-            $table->dateTime('publish_at');
             $table->timestamps();
+            //$table->timestamp('creation_date')->nullable();
+            //$table->timestamp('last_update')->nullable();
         });
     }
 
