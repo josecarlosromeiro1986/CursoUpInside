@@ -2,12 +2,14 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\Post::class, function (Faker $faker) {
+$factory->define(App\Post::class, function (Faker $faker) {
 
+    $title = $faker->paragraph(1);
     return [
-        'title' => $faker->sentence(8),
-        'subtitle' => $faker->sentence(16),
-        'description' => $faker->paragraph(10)
+        'title' => $title,
+        'slug' => str_slug($title),
+        'subtitle' => $faker->paragraph(1),
+        'description' => $faker->paragraph(5),
+        'author' => $faker->randomElement(\App\User::all()->pluck('id')->toArray())
     ];
-
 });
