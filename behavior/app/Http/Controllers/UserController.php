@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Address;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -60,6 +61,81 @@ class UserController extends Controller
             echo "Endereço: {$userAddress->address}, {$userAddress->number}<br />";
             echo "Complemento: {$userAddress->complement} CEP: {$userAddress->zipcode}<br />";
             echo "Cidade/Estado: {$userAddress->complement}/{$userAddress->zipcode}<br />";
+        }
+
+        // $addressTeste = new Address([
+        //     'address' => 'Rua teste 11',
+        //     'number' => '123',
+        //     'complement' => 'Apto 123',
+        //     'zipcode' => '86600-846',
+        //     'city' => 'Rolândia',
+        //     'state' => 'PR'
+        // ]);
+
+        // $address = new Address();
+        // $address->address = 'Rua teste 22';
+        // $address->number = '321';
+        // $address->complement = 'Apto 321';
+        // $address->zipcode = '86600-846';
+        // $address->city = 'Rolândia';
+        // $address->state = 'PR';
+
+        // $user->addressDelivery()->save($address);
+
+        // $user->addressDelivery()->saveMany([$addressTeste, $address]);
+
+        // $user->addressDelivery()->create([
+        //     'address' => 'Rua teste 11',
+        //     'number' => '123',
+        //     'complement' => 'Apto 123',
+        //     'zipcode' => '86600-846',
+        //     'city' => 'Rolândia',
+        //     'state' => 'PR'
+        // ]);
+
+        // $user->addressDelivery()->createMany([[
+        //     'address' => 'Rua teste 333',
+        //     'number' => '123',
+        //     'complement' => 'Apto 123',
+        //     'zipcode' => '86600-846',
+        //     'city' => 'Rolândia',
+        //     'state' => 'PR'
+        // ], [
+        //     'address' => 'Rua teste 444',
+        //     'number' => '123',
+        //     'complement' => 'Apto 123',
+        //     'zipcode' => '86600-846',
+        //     'city' => 'Rolândia',
+        //     'state' => 'PR'
+        // ]]);
+
+        // $users = User::with('addressDelivery')->get();
+        // dd($users);
+
+        $posts = $user->posts()->orderBy('id', 'DESC')->get();
+
+        if ($posts) {
+
+            echo "<h1>Artigos</h1><br />";
+
+            foreach ($posts as $post) {
+
+                echo "#{$post->id} Título: {$post->title}<br />";
+                echo "Subtitulo: {$post->subtitle}<br />";
+                echo "Conteúdo: {$post->description}<br /><hr>";
+            }
+        }
+
+        $comments = $user->commentsOnMyPost()->get();
+
+        if ($comments) {
+
+            echo "<h1>Comentários nos meus artigos</h1><br />";
+
+            foreach ($comments as $comment) {
+
+                echo "#Post:{$comment->post} User#{$comment->user} {$comment->content}<br />";
+            }
         }
     }
 
