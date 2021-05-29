@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -41,5 +40,15 @@ class User extends Authenticatable
     {
         return $this->hasOne(Address::class, 'user', 'id');
         //return $this->hasOne('app\Address');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'author', 'id');
+    }
+
+    public function commentsOnMyPost()
+    {
+        return $this->hasManyThrough(Comment::class, Post::class, 'author', 'post', 'id', 'id');
     }
 }
