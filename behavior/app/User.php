@@ -24,7 +24,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'level'
+    ];
+
+    protected $visible = [
+        'email', 'name', 'admin'
+    ];
+
+    protected $appends = [
+        'admin'
     ];
 
     /**
@@ -50,5 +58,25 @@ class User extends Authenticatable
     public function commentsOnMyPost()
     {
         return $this->hasManyThrough(Comment::class, Post::class, 'author', 'post', 'id', 'id');
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'item');
+    }
+
+    public function scopeStudents($query)
+    {
+        return $query->where('level', '<=', 5);
+    }
+
+    public function scopeAdmins($query)
+    {
+        return $query->where('level', '>', 5);
+    }
+
+    public function getAdminAttribute()
+    {
+        return ($this->attributes['level'] > 5 ? true : false);
     }
 }

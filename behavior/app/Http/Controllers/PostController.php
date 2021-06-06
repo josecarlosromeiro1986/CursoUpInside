@@ -50,7 +50,11 @@ class PostController extends Controller
 
         echo "#{$post->id} Título: {$post->title}<br />";
         echo "Subtitulo: {$post->subtitle}<br />";
-        echo "Conteúdo: {$post->description}<br /><hr>";
+        echo "Conteúdo: {$post->description}<br />";
+        echo "Data de criação: {$post->createdFmt}<br /><hr>";
+
+        // $post->title = 'Título de teste do meu artigo!';
+        // $post->save();
 
         $postAuthor = $post->author()->get()->first();
 
@@ -70,6 +74,22 @@ class PostController extends Controller
             foreach ($postCategories as $category) {
 
                 echo "#{$category->id} Categoria: {$category->name}<br />";
+            }
+        }
+
+        // $post->comments()->create([
+        //     'content' => 'Comentário 123'
+        // ]);
+
+        $comments = $post->comments()->get();
+
+        if ($comments) {
+
+            echo "<h1>Comentários</h1><br />";
+
+            foreach ($comments as $comment) {
+
+                echo "#{$comment->id} Categoria: {$comment->content}<br />";
             }
         }
 

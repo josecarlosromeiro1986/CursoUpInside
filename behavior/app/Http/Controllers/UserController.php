@@ -126,17 +126,64 @@ class UserController extends Controller
             }
         }
 
-        $comments = $user->commentsOnMyPost()->get();
+        // $comments = $user->commentsOnMyPost()->get();
+
+        // if ($comments) {
+
+        //     echo "<h1>Comentários nos meus artigos</h1><br />";
+
+        //     foreach ($comments as $comment) {
+
+        //         echo "#Post:{$comment->post} User#{$comment->user} {$comment->content}<br />";
+        //     }
+        // }
+
+        // $user->comments()->create([
+        //     'content' => 'Teste de comentário no modelo de Usuário'
+        // ]);
+
+        $comments = $user->comments()->get();
 
         if ($comments) {
 
-            echo "<h1>Comentários nos meus artigos</h1><br />";
+            echo "<h1>Comentários</h1><br />";
 
             foreach ($comments as $comment) {
 
-                echo "#Post:{$comment->post} User#{$comment->user} {$comment->content}<br />";
+                echo "#{$comment->id} Categoria: {$comment->content}<br />";
             }
         }
+
+        $students = User::students()->get();
+
+        if ($students) {
+
+            echo "<h1>Alunos</h1>";
+
+            foreach ($students as $student) {
+
+                echo "Nome do aluno: {$student->name}<br />";
+                echo "E-mail: {$student->email}<br />";
+            }
+        }
+
+        $admins = User::admins()->get();
+
+        if ($admins) {
+
+            echo "<h1>Administradores</h1>";
+
+            foreach ($admins as $admin) {
+
+                echo "Nome do administrador: {$admin->name}<br />";
+                echo "E-mail: {$admin->email}<br />";
+            }
+        }
+
+        $users = User::all();
+
+        var_dump($users->makeVisible('created_at')->toArray());
+        var_dump($users->makeHidden('created_at')->toJson());
     }
 
     /**
