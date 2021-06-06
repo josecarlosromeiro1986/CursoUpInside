@@ -10,6 +10,7 @@ $factory->define(\App\Address::class, function (Faker $faker) {
         'complement' => $faker->streetName(),
         'zipcode' => $faker->postcode(),
         'city' => $faker->city(),
-        'state' => $faker->city()
+        'state' => $faker->city(),
+        'status' => rand(0, 1),
     ];
 });
